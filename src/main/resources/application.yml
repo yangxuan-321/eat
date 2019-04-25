@@ -1,0 +1,44 @@
+#####日志文件位置####
+##两种配置方式:1.直接用application.yml/properties
+##            2.将配置项写在logback-spring.xml中，通过logging.config引入
+
+#logging:
+#  ##1.日志格式配置。%d日期 %msg日志信息 %n换行
+#  pattern:
+#    console: "%d - %msg%n"
+#
+#  ##2.配置日志文件存放位置
+#  file: D:/spring_boot_log/chat_eat/eat.log
+#
+#  ##3.配置日志级别 可以精确到类
+#  ##例如: com.ylink.test debug
+#  level: debug
+
+######数据库连接配置文件##########
+spring:
+  ##1.数据源相关
+  datasource:
+    ##1.1连接驱动类名
+    driver-class-name: com.mysql.jdbc.Driver
+    ##1.2用户名
+    username: root
+    ##1.3密码
+    password: root
+    ##1.4连接 useSSL 是为了防止 ssl连接时候的报错
+    #url: jdbc:mysql://139.199.74.95:3306/chat_eat?characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/chat_eat?characterEncoding=utf-8&useSSL=false
+
+  ##2.jpa
+  jpa:
+    ##2.1打印sql
+    show-sql: true
+
+  ##3.json
+  jackson:
+    ##3.1返回json默认空值不返回
+    default-property-inclusion: non_null
+
+# 配置访问根路径[url前缀]
+server:
+  servlet:
+    context-path: /sell

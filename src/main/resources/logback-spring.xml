@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+
+    <!--springboot 的 logback配置默认路径 spring-boot\2.0.2.RELEASE\spring-boot-2.0.2.RELEASE.jar!\org\springframework\boot\logging\logback-->
+
+    <!-- 控制台日志 -->
+    <!--consoleLog标签下的属性结构 用ch.qos.logback.core.ConsoleAppender-->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <!--输出格式-->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+
+    <!--info日志-->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>
+                ERROR
+            </level>
+
+            <!--FilterReply-->
+            <!--DENY - 禁止  以为只要匹配到Filter的 level(此处为ERROR) 的日志级别，就禁止输出-->
+            <onMatch>DENY</onMatch>
+            <!--ACCEPT - 处理  以为只要未匹配到Filter的 level(此处为ERROR) 的日志级别，就输出到相关文件(error文件) -->
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+
+        <encoder>
+            <pattern>
+                %msg%n
+            </pattern>
+        </encoder>
+
+        <!--滚动策略,以时间为策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>D:/spring_boot_log/chat_eat/eat_info.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+    <!--error日志-->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+        <!-- 为了使error日志文件，只打印error信息，因此加入一个过滤器，只过滤打印error级别的 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>
+                ERROR
+            </level>
+        </filter>
+
+        <encoder>
+            <pattern>
+                %msg%n
+            </pattern>
+        </encoder>
+
+        <!--滚动策略,以时间为策略-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--路径-->
+            <fileNamePattern>D:/spring_boot_log/chat_eat/eat_error.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+    <!--用到root代表 整个 项目都适用-->
+    <root level="info">
+
+        <!--控制台打印相关-->
+        <appender-ref ref="consoleLog" />
+
+        <!--info日志-->
+        <appender-ref ref="fileInfoLog"/>
+
+        <!--error日志-->
+        <appender-ref ref="fileErrorLog"/>
+
+
+    </root>
+
+</configuration>
